@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Mail;
 use App\Mail\WelcomeMail;
 use App\MailMagazine;
+use App\Events\UserRegistered;
 
 class RegisterController extends Controller
 {
@@ -73,9 +74,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        Mail::to($user->email)->send(new WelcomeMail());
+        // Mail::to($user->email)->send(new WelcomeMail());
 
-        MailMagazine::subscribe($user->email);
+        // MailMagazine::subscribe($user->email);
+
+        event(new UserRegistered($user));
 
         return $user;
     }
