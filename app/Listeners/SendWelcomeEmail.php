@@ -29,5 +29,7 @@ class SendWelcomeEmail
     public function handle(UserRegistered $event)
     {
         Mail::to($event->user->email)->send(new WelcomeMail());
+
+        logger()->info('complete sign up! user_name: ' . $event->user->name);
     }
 }
